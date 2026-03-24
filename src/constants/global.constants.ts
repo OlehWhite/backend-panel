@@ -1,4 +1,5 @@
 const BCRYPT_SALT_ROUNDS = Number(process.env.BCRYPT_SALT_ROUNDS ?? 10)
-const INVALID_CREDENTIALS_ERROR = 'Invalid credentials'
 
-export { BCRYPT_SALT_ROUNDS, INVALID_CREDENTIALS_ERROR }
+
+export { BCRYPT_SALT_ROUNDS }
+

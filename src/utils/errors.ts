@@ -5,6 +5,7 @@ import {
   ERROR_401,
   ERROR_404,
   ERROR_409,
+  INTERNAL_SERVER_ERROR,
   NOT_FOUND_ERROR,
   UNAUTHORIZED_ERROR
 } from "@/constants/errors.constants"
@@ -39,6 +40,12 @@ export class NotFoundError extends AppError {
 export class ConflictError extends AppError {
   constructor(message = CONFLICT_ERROR) {
     super(ERROR_409, message)
+  }
+}
+
+export class InternalServerError extends AppError {
+  constructor(message = INTERNAL_SERVER_ERROR) {
+    super(500, message)
   }
 }
 

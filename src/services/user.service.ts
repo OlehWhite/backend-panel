@@ -1,6 +1,8 @@
-import { BCRYPT_SALT_ROUNDS, INVALID_CREDENTIALS_ERROR } from "@/constants";
+import { BCRYPT_SALT_ROUNDS } from "@/constants";
+import { INVALID_CREDENTIALS_ERROR, NOT_FOUND_ERROR, USER_ALREADY_EXISTS_ERROR } from "@/constants/errors.constants";
 import { User } from "@/models/user.model";
 import { generateToken, normalizedEmail } from "@/utils";
+import { ConflictError, NotFoundError, UnauthorizedError } from "@/utils/errors";
 import bcrypt from 'bcrypt';
 
 export const createUser = async (email: string, password: string) => {
@@ -9,7 +11,7 @@ export const createUser = async (email: string, password: string) => {
   const existingUser = await User.findOne({ email: normEmail })
 
   if (existingUser) {
-    throw new Error(INVALID_CREDENTIALS_ERROR)
+    throw new ConflictError(USER_ALREADY_EXISTS_ERROR)
   }
 
   const hashedPassword = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS)
@@ -28,13 +30,13 @@ export const loginUser = async (email: string, password: string) => {
   const user = await User.findOne({ email: normEmail })
 
   if (!user) {
-    throw new Error(INVALID_CREDENTIALS_ERROR)
+    throw new UnauthorizedError(INVALID_CREDENTIALS_ERROR)
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password)
 
   if (!isPasswordValid) {
-    throw new Error(INVALID_CREDENTIALS_ERROR)
+    throw new UnauthorizedError(INVALID_CREDENTIALS_ERROR)
   }
 
   const token = generateToken(user._id.toString())
@@ -46,7 +48,7 @@ export const deleteUser = async (id: string) => {
   const user = await User.findByIdAndDelete(id)
 
   if (!user) {
-    throw new Error(INVALID_CREDENTIALS_ERROR)
+    throw new NotFoundError(NOT_FOUND_ERROR)
   }
 
   return user

@@ -1,4 +1,6 @@
+import { UNAUTHORIZED_ERROR } from '@/constants'
 import { User } from '@/models/user.model'
+import { InternalServerError, UnauthorizedError } from '@/utils'
 import { NextFunction, Request, Response } from 'express'
 
 export const requireUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -8,13 +10,13 @@ export const requireUser = async (req: Request, res: Response, next: NextFunctio
     const user = await User.findById(userId)
 
     if (!user) {
-      return res.status(401).json({ message: 'Unauthorized' })
+      return next(new UnauthorizedError(UNAUTHORIZED_ERROR))
     }
 
     ; (req as any).user = user
 
     next()
   } catch {
-    return res.status(500).json({ message: 'Server error' })
+    return next(new InternalServerError())
   }
 }

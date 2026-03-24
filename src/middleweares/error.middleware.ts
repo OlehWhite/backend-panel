@@ -1,13 +1,36 @@
-import { NextFunction, Request, Response } from "express"
+import { CONFLICT_ERROR, INTERNAL_SERVER_ERROR } from '@/constants/errors.constants'
+import { AppError, BadRequestError, ConflictError, InternalServerError } from '@/utils/errors'
+import { NextFunction, Request, Response } from 'express'
 
-export const errorMiddleware = (err: any, _req: Request, res: Response, _next: NextFunction) => {
-  if (err.name === 'ValidationError') {
-    return res.status(400).json({ message: err.message })
+const toAppError = (err: unknown): AppError => {
+  if (err instanceof AppError) {
+    return err
   }
 
-  if (err.name === 'UnauthorizedError') {
-    return res.status(401).json({ message: 'Unauthorized' })
+  const e = err as { name?: string; code?: number; message?: string }
+
+  if (e.name === 'ValidationError') {
+    return new BadRequestError(e.message ?? 'Bad Request')
   }
 
-  res.status(500).json({ message: 'Internal server error' })
+  if (e.code === 11000) {
+    return new ConflictError(CONFLICT_ERROR)
+  }
+
+  return new InternalServerError(INTERNAL_SERVER_ERROR)
+}
+
+export const errorMiddleware = (
+  err: unknown,
+  _req: Request,
+  res: Response,
+  _next: NextFunction
+) => {
+  console.error(err)
+
+  const appError = toAppError(err)
+
+  return res.status(appError.statusCode).json({
+    message: appError.message
+  })
 }

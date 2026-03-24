@@ -15,4 +15,5 @@ export const getMe = async (req: Request, res: Response) => {
 export const deleteMe = async (req: Request, res: Response) => {
   const user = (req as any).user
   await deleteUser(user._id)
+  res.status(204).send()
 }

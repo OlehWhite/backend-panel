@@ -2,11 +2,15 @@ const BAD_REQUEST_ERROR = 'Bad Request'
 const UNAUTHORIZED_ERROR = 'Unauthorized'
 const NOT_FOUND_ERROR = 'Not Found'
 const CONFLICT_ERROR = 'Conflict'
+const INVALID_CREDENTIALS_ERROR = 'Invalid credentials'
+const USER_ALREADY_EXISTS_ERROR = 'User already exists'
 
 const ERROR_400 = 400
 const ERROR_401 = 401
 const ERROR_404 = 404
 const ERROR_409 = 409
+
+const INTERNAL_SERVER_ERROR = 'Internal Server Error'
 
 export {
   BAD_REQUEST_ERROR,
@@ -15,7 +19,10 @@ export {
   ERROR_401,
   ERROR_404,
   ERROR_409,
+  INTERNAL_SERVER_ERROR,
+  INVALID_CREDENTIALS_ERROR,
   NOT_FOUND_ERROR,
-  UNAUTHORIZED_ERROR
+  UNAUTHORIZED_ERROR,
+  USER_ALREADY_EXISTS_ERROR
 }
 
