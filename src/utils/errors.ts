@@ -5,6 +5,7 @@ import {
   ERROR_401,
   ERROR_404,
   ERROR_409,
+  ERROR_500,
   INTERNAL_SERVER_ERROR,
   NOT_FOUND_ERROR,
   UNAUTHORIZED_ERROR
@@ -45,7 +46,7 @@ export class ConflictError extends AppError {
 
 export class InternalServerError extends AppError {
   constructor(message = INTERNAL_SERVER_ERROR) {
-    super(500, message)
+    super(ERROR_500, message)
   }
 }
 
