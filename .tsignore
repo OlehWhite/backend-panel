@@ -1,0 +1,10 @@
+# Optional local TypeScript ignore list (non-standard file).
+# Main Git exclusions are defined in .gitignore.
+
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+coverage/
+.env
+.env.*
