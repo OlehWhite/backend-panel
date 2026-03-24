@@ -1,6 +1,5 @@
 import { errorMiddleware } from '@/middleweares/error.middleware'
-import authRoutes from '@/routes/auth.route'
-import userRoutes from '@/routes/user.route'
+import { authRoutes, userRoutes } from '@/routes'
 import express from 'express'
 
 const app = express()

@@ -1,5 +1,5 @@
-import { login, register } from "@/controllers/auth.controller";
-import { asyncHandler } from "@/middleweares/async-handler.middleware";
+import { login, register } from "@/controllers";
+import { asyncHandler } from "@/middleweares";
 import { Router } from "express";
 
 const router = Router();

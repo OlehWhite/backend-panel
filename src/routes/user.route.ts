@@ -1,6 +1,5 @@
-import { deleteMe, getMe } from "@/controllers/user.controller";
-import { authMiddleware } from "@/middleweares/auth.middleware";
-import { requireUser } from "@/middleweares/require-user.middleware";
+import { deleteMe, getMe } from "@/controllers";
+import { authMiddleware, requireUser } from "@/middleweares";
 import { Router } from "express";
 
 const router = Router()

@@ -1,4 +1,4 @@
-import { deleteUser } from "@/services/user.service"
+import { deleteUser } from "@/services"
 import { Request, Response } from "express"
 
 export const getMe = async (req: Request, res: Response) => {

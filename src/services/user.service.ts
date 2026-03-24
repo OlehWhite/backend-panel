@@ -1,7 +1,6 @@
-import { BCRYPT_SALT_ROUNDS, INVALID_CREDENTIALS_ERROR } from "@/constants/global";
+import { BCRYPT_SALT_ROUNDS, INVALID_CREDENTIALS_ERROR } from "@/constants";
 import { User } from "@/models/user.model";
-import { generateToken } from "@/utils/generate-token";
-import { normalizedEmail } from "@/utils/normalized-email";
+import { generateToken, normalizedEmail } from "@/utils";
 import bcrypt from 'bcrypt';
 
 export const createUser = async (email: string, password: string) => {

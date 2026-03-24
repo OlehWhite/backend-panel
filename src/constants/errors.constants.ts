@@ -1,0 +1,21 @@
+const BAD_REQUEST_ERROR = 'Bad Request'
+const UNAUTHORIZED_ERROR = 'Unauthorized'
+const NOT_FOUND_ERROR = 'Not Found'
+const CONFLICT_ERROR = 'Conflict'
+
+const ERROR_400 = 400
+const ERROR_401 = 401
+const ERROR_404 = 404
+const ERROR_409 = 409
+
+export {
+  BAD_REQUEST_ERROR,
+  CONFLICT_ERROR,
+  ERROR_400,
+  ERROR_401,
+  ERROR_404,
+  ERROR_409,
+  NOT_FOUND_ERROR,
+  UNAUTHORIZED_ERROR
+}
+
