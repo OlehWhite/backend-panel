@@ -1,10 +1,11 @@
 import { login, register } from "@/controllers";
-import { asyncHandler } from "@/middleweares";
+import { asyncHandler, validate } from "@/middleweares";
+import { loginSchema, registerSchema } from "@/validators";
 import { Router } from "express";
 
 const router = Router();
 
-router.post("/register", asyncHandler(register));
-router.post("/login", asyncHandler(login));
+router.post("/register", validate(registerSchema), asyncHandler(register));
+router.post("/login", validate(loginSchema), asyncHandler(login));
 
 export default router;
