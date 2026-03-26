@@ -1,7 +1,7 @@
 import { BCRYPT_SALT_ROUNDS } from "@/constants";
 import { INVALID_CREDENTIALS_ERROR, NOT_FOUND_ERROR, USER_ALREADY_EXISTS_ERROR } from "@/constants/errors.constants";
-import { User } from "@/models/user.model";
-import { generateToken, normalizedEmail } from "@/utils";
+import { User } from "@/models";
+import { generateAccessToken, generateRefreshToken, normalizedEmail } from "@/utils";
 import { ConflictError, NotFoundError, UnauthorizedError } from "@/utils/errors";
 import bcrypt from 'bcrypt';
 
@@ -39,9 +39,12 @@ export const loginUser = async (email: string, password: string) => {
     throw new UnauthorizedError(INVALID_CREDENTIALS_ERROR)
   }
 
-  const token = generateToken(user._id.toString())
+  const accessToken = generateAccessToken(user._id.toString(), user.tokenVersion)
+  const refreshToken = generateRefreshToken(user._id.toString(), user.tokenVersion)
+  user.refreshToken = refreshToken
+  await user.save()
 
-  return { user, token }
+  return { user, accessToken, refreshToken }
 }
 
 export const deleteUser = async (id: string) => {

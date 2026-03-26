@@ -1,5 +1,5 @@
 import { UNAUTHORIZED_ERROR } from '@/constants'
-import { User } from '@/models/user.model'
+import { User } from '@/models'
 import { InternalServerError, UnauthorizedError } from '@/utils'
 import { NextFunction, Request, Response } from 'express'
 
