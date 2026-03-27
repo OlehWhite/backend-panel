@@ -1,4 +1,4 @@
-import { INVALID_REFRESH_TOKEN_ERROR, NO_REFRESH_TOKEN_ERROR } from "@/constants";
+import { INVALID_REFRESH_TOKEN_ERROR, INVALID_TOKEN_ERROR, NO_REFRESH_TOKEN_ERROR, SUCCESS_200, SUCCESS_201, SUCCESS_204 } from "@/constants";
 import { User } from "@/models";
 import { createUser, loginUser } from "@/services";
 import { generateAccessToken, generateRefreshToken, UnauthorizedError } from "@/utils";
@@ -10,7 +10,7 @@ export const register = async (req: Request, res: Response) => {
   const user = await createUser(email, password)
 
   res
-    .status(201)
+    .status(SUCCESS_201)
     .json({
       email: user.email,
       id: user._id
@@ -31,8 +31,27 @@ export const login = async (req: Request, res: Response) => {
   }
 
   res
-    .status(200)
+    .status(SUCCESS_200)
     .json(response)
+}
+
+export const logout = async (req: Request, res: Response) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    throw new UnauthorizedError(NO_REFRESH_TOKEN_ERROR)
+  }
+
+  const user = await User.findOne({ refreshToken })
+
+  if (!user) {
+    throw new UnauthorizedError(INVALID_TOKEN_ERROR)
+  }
+
+  user.refreshToken = ''
+  await user.save()
+
+  res.status(SUCCESS_204).send()
 }
 
 export const refresh = async (req: Request, res: Response) => {

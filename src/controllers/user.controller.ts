@@ -1,3 +1,4 @@
+import { SUCCESS_204 } from "@/constants"
 import { deleteUser } from "@/services"
 import { Request, Response } from "express"
 
@@ -15,5 +16,5 @@ export const getMe = async (req: Request, res: Response) => {
 export const deleteMe = async (req: Request, res: Response) => {
   const user = (req as any).user
   await deleteUser(user._id)
-  res.status(204).send()
+  res.status(SUCCESS_204).send()
 }
