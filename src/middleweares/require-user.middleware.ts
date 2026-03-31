@@ -5,7 +5,7 @@ import { NextFunction, Request, Response } from 'express'
 
 export const requireUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userId = (req as any).userId
+    const userId = req.userId
 
     const user = await User.findById(userId)
 
@@ -13,7 +13,10 @@ export const requireUser = async (req: Request, res: Response, next: NextFunctio
       return next(new UnauthorizedError(UNAUTHORIZED_ERROR))
     }
 
-    ; (req as any).user = user
+    ; req.user = {
+      id: user._id.toString(),
+      email: user.email
+    }
 
     next()
   } catch {

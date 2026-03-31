@@ -37,7 +37,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
       return next(new UnauthorizedError(UNAUTHORIZED_ERROR))
     }
 
-    ; (req as any).userId = decoded.id
+    ; req.userId = decoded.id
 
   } catch {
     return next(new UnauthorizedError(UNAUTHORIZED_ERROR))
