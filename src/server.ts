@@ -1,6 +1,7 @@
-import 'dotenv/config'
-import app from './app'
-import { connectDB } from './config/db'
+import "@/config/env";
+import 'dotenv/config';
+import app from './app';
+import { connectDB } from './config/db';
 
 const PORT = process.env.PORT || 4200
 
@@ -17,4 +18,5 @@ async function serverStart() {
     process.exit(1)
   }
 }
+
 serverStart()   
